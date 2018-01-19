@@ -8,7 +8,7 @@ import cn.sh.changxing.latte.app.Latte;
  * Created by ZengChao on 2018/1/18.
  */
 
-public class ExampleApp extends Application{
+public class ExampleApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

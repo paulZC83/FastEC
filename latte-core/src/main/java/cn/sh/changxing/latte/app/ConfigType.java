@@ -7,6 +7,6 @@ package cn.sh.changxing.latte.app;
 public enum ConfigType {
     API_HOST,
     APPLICATION_CONTEXT,
-    CONFIG_READY,
+    CONFIG_READY, //配置是否完成
     ICON
 }

@@ -14,6 +14,7 @@ public class Configurator {
         LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
     }
 
+    /*------------------------线程安全的单例模式-------------------------------*/
     private static class Holder{
         private static final Configurator INSTANCE = new Configurator();
     }
@@ -21,6 +22,7 @@ public class Configurator {
     public static Configurator getInstance(){
         return Holder.INSTANCE;
     }
+    /*------------------------线程安全的单例模式-------------------------------*/
 
     public final void configure(){
         LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);

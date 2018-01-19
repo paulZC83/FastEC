@@ -8,6 +8,9 @@ import java.util.WeakHashMap;
  * Created by ZengChao on 2018/1/18.
  */
 
+/*
+ * 对外的工具类
+ */
 public final class Latte {
 
     public static Configurator init(Context context){
