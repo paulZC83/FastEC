@@ -38,7 +38,7 @@ public class Configurator {
     private void checkConfiguration(){
         final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigType.CONFIG_READY.name());
         if (!isReady) {
-            throw new RuntimeException("Configuration is not ready, call configure");
+            throw new RuntimeException("Configuration is not ready, call configure!");
         }
     }
 
