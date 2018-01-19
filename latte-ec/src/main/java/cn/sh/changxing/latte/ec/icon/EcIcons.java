@@ -7,6 +7,7 @@ import com.joanzapata.iconify.Icon;
  */
 
 public enum EcIcons implements Icon{
+    // 把阿里巴巴矢量图标库中相应的图标的代码的"&#x"改为“\u”
     icon_test_1('\ue635'),
     icon_test_2('\ue738');
 

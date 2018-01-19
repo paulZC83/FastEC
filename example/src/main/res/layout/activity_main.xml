@@ -12,5 +12,8 @@
        android:layout_height="wrap_content"
        android:text="{icon-test-1}"
        />
+   /**
+   以上android:text中的引用,需要把枚举类中定义的下行线("_")改为连接线（"-"）
+   */
 
 </android.support.constraint.ConstraintLayout>
