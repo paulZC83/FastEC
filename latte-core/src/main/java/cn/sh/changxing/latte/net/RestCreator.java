@@ -1,5 +1,6 @@
 package cn.sh.changxing.latte.net;
 
+import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 import cn.sh.changxing.latte.app.ConfigType;
@@ -14,7 +15,15 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RestCreator {
 
-    public RestService getRestService(){
+    private static final class ParamsHolder{
+        private static final WeakHashMap<String, Object> PARAMS = new WeakHashMap<>();
+    }
+
+    public static WeakHashMap<String, Object> getParams(){
+        return ParamsHolder.PARAMS;
+    }
+
+    public static RestService getRestService(){
         return RestServiceHolder.REST_SERVICE;
     }
 
