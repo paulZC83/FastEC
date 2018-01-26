@@ -28,6 +28,9 @@ public class RestClientBuilder {
     private File mFile = null;
     private Context mContext = null;
     private String mLoaderStyle = null;
+    private String mDownloadDir = null;
+    private String mExtension = null;
+    private String mName = null;
 
     RestClientBuilder() {
 
@@ -101,7 +104,22 @@ public class RestClientBuilder {
         return this;
     }
 
+    public RestClientBuilder dir(String dir){
+        this.mDownloadDir = dir;
+        return this;
+    }
+
+    public RestClientBuilder extension(String extension){
+        this.mExtension = extension;
+        return this;
+    }
+
+    public RestClientBuilder name(String downloadName){
+        this.mName = downloadName;
+        return this;
+    }
+
     public RestClient build() {
-        return new RestClient(mUrl, PARAMS, mSuccess, mError, mFailure, mRequest, mBody, mFile, mContext, mLoaderStyle);
+        return new RestClient(mUrl, PARAMS, mSuccess, mError, mFailure, mRequest, mBody, mFile, mContext, mLoaderStyle, mDownloadDir, mExtension, mName);
     }
 }

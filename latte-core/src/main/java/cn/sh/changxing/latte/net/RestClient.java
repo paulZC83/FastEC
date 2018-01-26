@@ -10,6 +10,7 @@ import cn.sh.changxing.latte.net.callback.IFailure;
 import cn.sh.changxing.latte.net.callback.IRequest;
 import cn.sh.changxing.latte.net.callback.IRequestCallbacks;
 import cn.sh.changxing.latte.net.callback.ISuccess;
+import cn.sh.changxing.latte.net.download.DownloadHandler;
 import cn.sh.changxing.latte.ui.LatteLoader;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -32,8 +33,17 @@ public class RestClient {
     private final File FILE;
     private final Context CONTEXT;
     private final String LOADER_STYLE;
+    // 下载文件目录
+    private final String DOWNLOAD_DIR;
+    // 下载文件后缀
+    private final String EXTENSION;
+    // 下载文件名(需要完整路径,和上面的目录及后缀二选一使用)
+    private final String NAME;
 
-    public RestClient(String url, WeakHashMap<String, Object> params, ISuccess success, IError error, IFailure failure, IRequest request, RequestBody body, File file, Context context, String loaderStyle) {
+    public RestClient(String url, WeakHashMap<String, Object> params, ISuccess success,
+                      IError error, IFailure failure, IRequest request, RequestBody body,
+                      File file, Context context, String loaderStyle, String downloadDir,
+                      String extension, String name) {
         this.URL = url;
         PARAMS.putAll(params);
         this.SUCCESS = success;
@@ -44,6 +54,9 @@ public class RestClient {
         this.FILE = file;
         this.CONTEXT = context;
         this.LOADER_STYLE = loaderStyle;
+        this.DOWNLOAD_DIR = downloadDir;
+        this.EXTENSION = extension;
+        this.NAME = name;
     }
 
     public static RestClientBuilder builder() {
@@ -126,5 +139,9 @@ public class RestClient {
 
     public final void delete() {
         request(HttpMethod.DELETE);
+    }
+
+    public final void download(){
+        new DownloadHandler(URL,SUCCESS,ERROR,FAILURE,REQUEST,DOWNLOAD_DIR,EXTENSION,NAME).handleDownload();
     }
 }
