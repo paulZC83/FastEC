@@ -1,11 +1,14 @@
 package cn.sh.changxing.latte.net;
 
+import android.content.Context;
+
 import java.util.WeakHashMap;
 
 import cn.sh.changxing.latte.net.callback.IError;
 import cn.sh.changxing.latte.net.callback.IFailure;
 import cn.sh.changxing.latte.net.callback.IRequest;
 import cn.sh.changxing.latte.net.callback.ISuccess;
+import cn.sh.changxing.latte.ui.LoaderStyle;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -14,13 +17,15 @@ import okhttp3.RequestBody;
  */
 
 public class RestClientBuilder {
-    private String mUrl;
+    private String mUrl = null;
     private static final WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
-    private ISuccess mSuccess;
-    private IError mError;
-    private IFailure mFailure;
-    private IRequest mRequest;
-    private RequestBody mBody;
+    private ISuccess mSuccess = null;
+    private IError mError = null;
+    private IFailure mFailure = null;
+    private IRequest mRequest = null;
+    private RequestBody mBody = null;
+    private Context mContext = null;
+    private String mLoaderStyle = null;
 
     RestClientBuilder() {
 
@@ -41,8 +46,8 @@ public class RestClientBuilder {
         return this;
     }
 
-    public RestClientBuilder raw(String raw){
-        this.mBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"),raw);
+    public RestClientBuilder raw(String raw) {
+        this.mBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), raw);
         return this;
     }
 
@@ -66,8 +71,25 @@ public class RestClientBuilder {
         return this;
     }
 
+    public RestClientBuilder loader(Context context, LoaderStyle loaderStyle) {
+        this.mContext = context;
+        this.mLoaderStyle = loaderStyle.name();
+        return this;
+    }
+
+    public RestClientBuilder loader(Context context, String loaderStyle) {
+        this.mContext = context;
+        this.mLoaderStyle = loaderStyle;
+        return this;
+    }
+
+    public RestClientBuilder loader(Context context) {
+        this.mContext = context;
+        this.mLoaderStyle = LoaderStyle.BallClipRotateIndicator.name();
+        return this;
+    }
 
     public RestClient build() {
-        return new RestClient(mUrl, PARAMS, mSuccess, mError, mFailure, mRequest, mBody);
+        return new RestClient(mUrl, PARAMS, mSuccess, mError, mFailure, mRequest, mBody, mContext, mLoaderStyle);
     }
 }
