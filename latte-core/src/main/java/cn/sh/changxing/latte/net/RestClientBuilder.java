@@ -2,6 +2,7 @@ package cn.sh.changxing.latte.net;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.WeakHashMap;
 
 import cn.sh.changxing.latte.net.callback.IError;
@@ -24,6 +25,7 @@ public class RestClientBuilder {
     private IFailure mFailure = null;
     private IRequest mRequest = null;
     private RequestBody mBody = null;
+    private File mFile = null;
     private Context mContext = null;
     private String mLoaderStyle = null;
 
@@ -71,6 +73,16 @@ public class RestClientBuilder {
         return this;
     }
 
+    public RestClientBuilder file (File file){
+        this.mFile = file;
+        return this;
+    }
+
+    public RestClientBuilder file (String file){
+        this.mFile = new File(file);
+        return this;
+    }
+
     public RestClientBuilder loader(Context context, LoaderStyle loaderStyle) {
         this.mContext = context;
         this.mLoaderStyle = loaderStyle.name();
@@ -90,6 +102,6 @@ public class RestClientBuilder {
     }
 
     public RestClient build() {
-        return new RestClient(mUrl, PARAMS, mSuccess, mError, mFailure, mRequest, mBody, mContext, mLoaderStyle);
+        return new RestClient(mUrl, PARAMS, mSuccess, mError, mFailure, mRequest, mBody, mFile, mContext, mLoaderStyle);
     }
 }

@@ -2,6 +2,7 @@ package cn.sh.changxing.latte.net;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.WeakHashMap;
 
 import cn.sh.changxing.latte.net.callback.IError;
@@ -10,6 +11,8 @@ import cn.sh.changxing.latte.net.callback.IRequest;
 import cn.sh.changxing.latte.net.callback.IRequestCallbacks;
 import cn.sh.changxing.latte.net.callback.ISuccess;
 import cn.sh.changxing.latte.ui.LatteLoader;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,10 +29,11 @@ public class RestClient {
     private final IFailure FAILURE;
     private final IRequest REQUEST;
     private final RequestBody BODY;
+    private final File FILE;
     private final Context CONTEXT;
     private final String LOADER_STYLE;
 
-    public RestClient(String url, WeakHashMap<String, Object> params, ISuccess success, IError error, IFailure failure, IRequest request, RequestBody body, Context context, String loaderStyle) {
+    public RestClient(String url, WeakHashMap<String, Object> params, ISuccess success, IError error, IFailure failure, IRequest request, RequestBody body, File file, Context context, String loaderStyle) {
         this.URL = url;
         PARAMS.putAll(params);
         this.SUCCESS = success;
@@ -37,6 +41,7 @@ public class RestClient {
         this.FAILURE = failure;
         this.REQUEST = request;
         this.BODY = body;
+        this.FILE = file;
         this.CONTEXT = context;
         this.LOADER_STYLE = loaderStyle;
     }
@@ -62,11 +67,22 @@ public class RestClient {
             case POST:
                 call = service.post(URL, PARAMS);
                 break;
+            case POST_RAW:
+                call = service.postRaw(URL, BODY);
+                break;
             case PUT:
                 call = service.put(URL, PARAMS);
                 break;
+            case PUT_RAW:
+                call = service.putRaw(URL, BODY);
+                break;
             case DELETE:
                 call = service.delete(URL, PARAMS);
+                break;
+            case UPLOAD:
+                final RequestBody requestBody = RequestBody.create(MediaType.parse(MultipartBody.FORM.toString()), FILE);
+                MultipartBody.Part part = MultipartBody.Part.createFormData("file", FILE.getName(), requestBody);
+                call = service.upload(URL, part);
                 break;
             default:
                 break;
@@ -86,11 +102,26 @@ public class RestClient {
     }
 
     public final void post() {
-        request(HttpMethod.POST);
+        if (BODY == null) {
+            request(HttpMethod.POST);
+        } else {
+            if (!PARAMS.isEmpty()) {
+                throw new RuntimeException("params must be null!");
+            }
+            request(HttpMethod.POST_RAW);
+        }
+
     }
 
     public final void put() {
-        request(HttpMethod.PUT);
+        if (BODY == null) {
+            request(HttpMethod.PUT);
+        } else {
+            if (PARAMS != null) {
+                throw new RuntimeException("params must be null!");
+            }
+            request(HttpMethod.PUT_RAW);
+        }
     }
 
     public final void delete() {
