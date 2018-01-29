@@ -3,6 +3,7 @@ package cn.sh.changxing.fastec.example;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Toast;
 
 import cn.sh.changxing.latte.delegates.LatteDelegate;
 import cn.sh.changxing.latte.net.RestClient;
@@ -27,25 +28,24 @@ public class ExampleDelegate extends LatteDelegate {
 
     public void test() {
         RestClient client = RestClient.builder()
-                .url("http://news.baidu.com/?tn=news")
-//                .params("","")
+                .url("http://127.0.0.1/index")
                 .loader(getContext())
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-//                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                     }
                 })
                 .failure(new IFailure() {
                     @Override
                     public void onFailure() {
-
+                        Toast.makeText(getContext(), "Failure!", Toast.LENGTH_LONG).show();
                     }
                 })
                 .error(new IError() {
                     @Override
                     public void onError(int code, String message) {
-
+                        Toast.makeText(getContext(), "Error--code:" + code + "--message:" + message, Toast.LENGTH_LONG).show();
                     }
                 })
                 .build();

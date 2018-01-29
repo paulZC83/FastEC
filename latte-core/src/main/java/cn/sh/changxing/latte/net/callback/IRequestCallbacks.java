@@ -2,6 +2,7 @@ package cn.sh.changxing.latte.net.callback;
 
 
 import android.os.Handler;
+import android.util.Log;
 
 import cn.sh.changxing.latte.ui.LatteLoader;
 import retrofit2.Call;
@@ -55,6 +56,7 @@ public class IRequestCallbacks implements Callback<String> {
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
+        Log.d("Callbacks-------", t.getMessage());
         if (FAILURE != null) {
             FAILURE.onFailure();
         }

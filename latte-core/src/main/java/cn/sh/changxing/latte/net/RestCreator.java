@@ -1,10 +1,12 @@
 package cn.sh.changxing.latte.net;
 
+import java.util.ArrayList;
 import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
-import cn.sh.changxing.latte.app.ConfigType;
+import cn.sh.changxing.latte.app.ConfigKeys;
 import cn.sh.changxing.latte.app.Latte;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -28,8 +30,7 @@ public class RestCreator {
     }
 
     public static final class RetrofitHolder {
-        private static final String BASE_URL = (String) Latte.getConfigurations()
-                .get(ConfigType.API_HOST.name());
+        private static final String BASE_URL = (String) Latte.getConfigurations(ConfigKeys.API_HOST);
         private static final Retrofit RETROFIT = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -39,7 +40,17 @@ public class RestCreator {
 
     public static final class OkhttpHolder {
         private static final int TIME_OUT = 60;
-        private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient.Builder()
+        private static final ArrayList<Interceptor> INTERCEPTORS = Latte.getConfigurations(ConfigKeys.INTERCEPTOR);
+        private static final OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
+        private static OkHttpClient.Builder addInterceptor(){
+            if (INTERCEPTORS != null && !INTERCEPTORS.isEmpty()){
+                for (Interceptor interceptor: INTERCEPTORS) {
+                    BUILDER.addInterceptor(interceptor);
+                }
+            }
+            return BUILDER;
+        }
+        private static final OkHttpClient OK_HTTP_CLIENT = BUILDER
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .build();
     }
