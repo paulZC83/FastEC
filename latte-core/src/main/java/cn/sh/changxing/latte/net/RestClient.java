@@ -11,7 +11,7 @@ import cn.sh.changxing.latte.net.callback.IRequest;
 import cn.sh.changxing.latte.net.callback.IRequestCallbacks;
 import cn.sh.changxing.latte.net.callback.ISuccess;
 import cn.sh.changxing.latte.net.download.DownloadHandler;
-import cn.sh.changxing.latte.ui.LatteLoader;
+import cn.sh.changxing.latte.ui.loader.LatteLoader;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

@@ -11,7 +11,7 @@ import java.io.InputStream;
 import cn.sh.changxing.latte.app.Latte;
 import cn.sh.changxing.latte.net.callback.IRequest;
 import cn.sh.changxing.latte.net.callback.ISuccess;
-import cn.sh.changxing.latte.utils.FileUtil;
+import cn.sh.changxing.latte.utils.file.FileUtil;
 import okhttp3.ResponseBody;
 
 /**

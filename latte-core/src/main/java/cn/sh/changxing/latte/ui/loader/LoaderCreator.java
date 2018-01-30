@@ -1,4 +1,4 @@
-package cn.sh.changxing.latte.ui;
+package cn.sh.changxing.latte.ui.loader;
 
 import android.content.Context;
 

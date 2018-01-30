@@ -1,4 +1,4 @@
-package cn.sh.changxing.latte.ui;
+package cn.sh.changxing.latte.ui.loader;
 
 /**
  * Created by ZengChao on 2018/1/26.

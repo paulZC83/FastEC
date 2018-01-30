@@ -9,7 +9,7 @@ import cn.sh.changxing.latte.net.callback.IError;
 import cn.sh.changxing.latte.net.callback.IFailure;
 import cn.sh.changxing.latte.net.callback.IRequest;
 import cn.sh.changxing.latte.net.callback.ISuccess;
-import cn.sh.changxing.latte.ui.LoaderStyle;
+import cn.sh.changxing.latte.ui.loader.LoaderStyle;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 

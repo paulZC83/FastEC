@@ -4,7 +4,7 @@ import android.support.annotation.RawRes;
 
 import java.io.IOException;
 
-import cn.sh.changxing.latte.utils.FileUtil;
+import cn.sh.changxing.latte.utils.file.FileUtil;
 import okhttp3.MediaType;
 import okhttp3.Protocol;
 import okhttp3.Response;

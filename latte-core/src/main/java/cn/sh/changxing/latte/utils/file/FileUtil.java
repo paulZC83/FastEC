@@ -1,4 +1,4 @@
-package cn.sh.changxing.latte.utils;
+package cn.sh.changxing.latte.utils.file;
 
 import android.content.ContentResolver;
 import android.content.Context;

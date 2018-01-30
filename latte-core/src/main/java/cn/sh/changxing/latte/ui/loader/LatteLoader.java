@@ -1,4 +1,4 @@
-package cn.sh.changxing.latte.ui;
+package cn.sh.changxing.latte.ui.loader;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatDialog;
@@ -11,7 +11,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;
 
 import cn.sh.changxing.latte.R;
-import cn.sh.changxing.latte.utils.DimenUtil;
+import cn.sh.changxing.latte.utils.dimen.DimenUtil;
 
 /**
  * Created by ZengChao on 2018/1/26.

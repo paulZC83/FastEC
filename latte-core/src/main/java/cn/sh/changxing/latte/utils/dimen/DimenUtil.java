@@ -1,4 +1,4 @@
-package cn.sh.changxing.latte.utils;
+package cn.sh.changxing.latte.utils.dimen;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;

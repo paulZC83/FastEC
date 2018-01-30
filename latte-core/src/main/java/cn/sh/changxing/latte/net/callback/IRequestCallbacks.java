@@ -4,7 +4,7 @@ package cn.sh.changxing.latte.net.callback;
 import android.os.Handler;
 import android.util.Log;
 
-import cn.sh.changxing.latte.ui.LatteLoader;
+import cn.sh.changxing.latte.ui.loader.LatteLoader;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
