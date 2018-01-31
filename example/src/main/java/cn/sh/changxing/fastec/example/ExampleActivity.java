@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBar;
 
 import cn.sh.changxing.latte.activities.ProxyActivity;
 import cn.sh.changxing.latte.delegates.LatteDelegate;
-import cn.sh.changxing.latte.ec.launcher.LauncherDelegate;
+import cn.sh.changxing.latte.ec.sign.SignUpDelegate;
 
 public class ExampleActivity extends ProxyActivity {
 
@@ -21,6 +21,6 @@ public class ExampleActivity extends ProxyActivity {
 
     @Override
     public LatteDelegate setRootDelegate() {
-        return new LauncherDelegate();
+        return new SignUpDelegate();
     }
 }
