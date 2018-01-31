@@ -13,6 +13,8 @@ import butterknife.OnClick;
 import cn.sh.changxing.latte.delegates.LatteDelegate;
 import cn.sh.changxing.latte.ec.R;
 import cn.sh.changxing.latte.ec.R2;
+import cn.sh.changxing.latte.ui.launcher.ScrollLauncherTag;
+import cn.sh.changxing.latte.utils.storage.LattePreference;
 import cn.sh.changxing.latte.utils.timer.BaseTimerTask;
 import cn.sh.changxing.latte.utils.timer.ITimerListener;
 
@@ -20,24 +22,37 @@ import cn.sh.changxing.latte.utils.timer.ITimerListener;
  * Created by ZengChao on 2018/1/30.
  */
 
-public class LauncherDelegate extends LatteDelegate implements ITimerListener{
+public class LauncherDelegate extends LatteDelegate implements ITimerListener {
 
     @BindView(R2.id.tv_launcher_timer)
     AppCompatTextView mTvTimer = null;
 
     @OnClick(R2.id.tv_launcher_timer)
-    void onClickTimerView(){
-
+    void onClickTimerView() {
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+            checkIsShowScroll();
+        }
     }
 
     private Timer mTimer = null;
 
     private int mCount = 5;
 
-    private void initTimer(){
+    private void initTimer() {
         mTimer = new Timer();
         final BaseTimerTask task = new BaseTimerTask(this);
         mTimer.schedule(task, 0, 1000);
+    }
+
+    // 判断是否显示滑动页
+    private void checkIsShowScroll() {
+        if (!LattePreference.getAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name())) {
+            start(new LauncherScrollDelegate(), SINGLETASK);
+        } else {
+            // 判断是否已经登录
+        }
     }
 
 
@@ -63,6 +78,7 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener{
                         if (mTimer != null) {
                             mTimer.cancel();
                             mTimer = null;
+                            checkIsShowScroll();
                         }
                     }
                 }
