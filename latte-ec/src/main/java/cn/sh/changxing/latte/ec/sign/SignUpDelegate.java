@@ -31,7 +31,7 @@ public class SignUpDelegate extends LatteDelegate {
     TextInputEditText mRePassword = null;
 
     @OnClick(R2.id.btn_sign_up)
-    void onClick(){
+    void onClickSignUp(){
         if (checkForm()) {
 //            RestClient.builder()
 //                    .url("sing_up")
@@ -46,6 +46,11 @@ public class SignUpDelegate extends LatteDelegate {
 //                    .post();
             Toast.makeText(getContext(), "注册成功", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @OnClick(R2.id.tv_sing_up_link_sign_in)
+    void onClickLink(){
+        start(new SignInDelegate());
     }
 
     private boolean checkForm(){
