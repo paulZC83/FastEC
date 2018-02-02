@@ -3,6 +3,7 @@ package cn.sh.changxing.latte.ec.sign;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -12,6 +13,11 @@ import butterknife.OnClick;
 import cn.sh.changxing.latte.delegates.LatteDelegate;
 import cn.sh.changxing.latte.ec.R;
 import cn.sh.changxing.latte.ec.R2;
+import cn.sh.changxing.latte.net.RestClient;
+import cn.sh.changxing.latte.net.callback.IError;
+import cn.sh.changxing.latte.net.callback.IFailure;
+import cn.sh.changxing.latte.net.callback.ISuccess;
+import cn.sh.changxing.latte.utils.log.LatteLogger;
 
 /**
  * Created by ZengChao on 2018/1/31.
@@ -33,17 +39,35 @@ public class SignUpDelegate extends LatteDelegate {
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp(){
         if (checkForm()) {
-//            RestClient.builder()
-//                    .url("sing_up")
-//                    .params("","")
-//                    .success(new ISuccess() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//
-//                        }
-//                    })
-//                    .build()
-//                    .post();
+            RestClient.builder()
+                    .url("http://192.168.30.47:8080/RestDataServer/api/user_profile.php")
+                    .params("name",mName.getText().toString())
+                    .params("email",mEmail.getText().toString())
+                    .params("phone",mPhone.getText().toString())
+                    .params("password", mPassword.getText().toString())
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            LatteLogger.json("USER_PROFILE", response);
+                            Log.d("zzzzzzzzz----", response.toString());
+                            SignHandler.onSignUp(response);
+                        }
+                    })
+                    .failure(new IFailure() {
+                        @Override
+                        public void onFailure() {
+
+                            Log.d("zzzzzzzzz----", "onFailure");
+                        }
+                    })
+                    .error(new IError() {
+                        @Override
+                        public void onError(int code, String msg) {
+                            Log.d("zzzzzzzzz----", "code:"+code+"--MSG:"+msg);
+                        }
+                    })
+                    .build()
+                    .post();
             Toast.makeText(getContext(), "注册成功", Toast.LENGTH_SHORT).show();
         }
     }
