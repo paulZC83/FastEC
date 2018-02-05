@@ -1,12 +1,12 @@
 package cn.sh.changxing.latte.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,21 +36,31 @@ public class SignUpDelegate extends LatteDelegate {
     @BindView(R2.id.edit_sign_up_re_password)
     TextInputEditText mRePassword = null;
 
+    private ISignListener mISignListener = null;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener) {
+            mISignListener = (ISignListener) activity;
+        }
+    }
+
     @OnClick(R2.id.btn_sign_up)
-    void onClickSignUp(){
+    void onClickSignUp() {
         if (checkForm()) {
             RestClient.builder()
                     .url("http://192.168.30.47:8080/RestDataServer/api/user_profile.php")
-                    .params("name",mName.getText().toString())
-                    .params("email",mEmail.getText().toString())
-                    .params("phone",mPhone.getText().toString())
+                    .params("name", mName.getText().toString())
+                    .params("email", mEmail.getText().toString())
+                    .params("phone", mPhone.getText().toString())
                     .params("password", mPassword.getText().toString())
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(String response) {
                             LatteLogger.json("USER_PROFILE", response);
                             Log.d("zzzzzzzzz----", response.toString());
-                            SignHandler.onSignUp(response);
+                            SignHandler.onSignUp(response, mISignListener);
                         }
                     })
                     .failure(new IFailure() {
@@ -63,21 +73,20 @@ public class SignUpDelegate extends LatteDelegate {
                     .error(new IError() {
                         @Override
                         public void onError(int code, String msg) {
-                            Log.d("zzzzzzzzz----", "code:"+code+"--MSG:"+msg);
+                            Log.d("zzzzzzzzz----", "code:" + code + "--MSG:" + msg);
                         }
                     })
                     .build()
                     .post();
-            Toast.makeText(getContext(), "注册成功", Toast.LENGTH_SHORT).show();
         }
     }
 
     @OnClick(R2.id.tv_sing_up_link_sign_in)
-    void onClickLink(){
+    void onClickLink() {
         start(new SignInDelegate());
     }
 
-    private boolean checkForm(){
+    private boolean checkForm() {
         boolean isPass = true;
         final String name = mName.getText().toString().trim();
         final String phone = mPhone.getText().toString().trim();
@@ -87,31 +96,31 @@ public class SignUpDelegate extends LatteDelegate {
         if (name.isEmpty()) {
             mName.setError("姓名没有输入");
             isPass = false;
-        }  else {
+        } else {
             mName.setError(null);
         }
         if (phone.isEmpty() || phone.length() != 11) {
             mPhone.setError("手机号码输入位数错误");
             isPass = false;
-        }  else {
+        } else {
             mPhone.setError(null);
         }
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             mEmail.setError("邮箱输入格式错误");
             isPass = false;
-        }  else {
+        } else {
             mEmail.setError(null);
         }
         if (password.isEmpty() || password.length() < 6) {
             mPassword.setError("密码至少输入6位");
             isPass = false;
-        }  else {
+        } else {
             mPassword.setError(null);
         }
         if (rePassword.isEmpty() || rePassword.length() < 6 || !rePassword.equals(password)) {
             mRePassword.setError("密码验证错误");
             isPass = false;
-        }  else {
+        } else {
             mRePassword.setError(null);
         }
         return isPass;
