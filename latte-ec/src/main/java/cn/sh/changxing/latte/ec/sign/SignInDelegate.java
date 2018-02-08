@@ -6,9 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.sh.changxing.latte.WeChat.LatteWeChat;
+import cn.sh.changxing.latte.WeChat.callbacks.IWeChatSignInCallback;
 import cn.sh.changxing.latte.delegates.LatteDelegate;
 import cn.sh.changxing.latte.ec.R;
 import cn.sh.changxing.latte.ec.R2;
@@ -76,7 +79,12 @@ public class SignInDelegate extends LatteDelegate {
 
     @OnClick(R2.id.icon_sign_in_we_chat)
     void onClickaWeChat() {
-
+        LatteWeChat.getInstance().onSignSuccess(new IWeChatSignInCallback() {
+            @Override
+            public void onSingInSuccess(String userInfo) {
+                Toast.makeText(getContext(), userInfo, Toast.LENGTH_LONG).show();
+            }
+        }).signIn();
     }
 
     private boolean checkForm() {

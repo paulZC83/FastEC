@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.widget.Toast;
 
 import cn.sh.changxing.latte.activities.ProxyActivity;
+import cn.sh.changxing.latte.app.Latte;
 import cn.sh.changxing.latte.delegates.LatteDelegate;
 import cn.sh.changxing.latte.ec.launcher.LauncherDelegate;
 import cn.sh.changxing.latte.ec.sign.ISignListener;
@@ -24,6 +25,7 @@ public class ExampleActivity extends ProxyActivity implements
         if (actionBar != null) {
             actionBar.hide();
         }
+        Latte.getConfigurator().withActivity(this);
     }
 
     @Override

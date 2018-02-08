@@ -23,6 +23,8 @@ public class ExampleApp extends Application {
                 .withIcon(new FontECModule()) // 自定义字体,来源阿里巴巴矢量图标库,本地存放在assets目录下的tff文件
                 .withApiHost("http://127.0.0.1/")
                 .withInterceptor(new DebugInterceptor("index",R.raw.test))
+                .withWeChatAppId("")
+                .withWeChatAppSecret("")
                 .configure();
         initStetho();
         DatabaseManager.getInstance().init(this);

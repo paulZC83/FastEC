@@ -9,5 +9,8 @@ public enum ConfigKeys {
     APPLICATION_CONTEXT, //Application的Context
     CONFIG_READY, //配置是否完成
     ICON,
-    INTERCEPTOR
+    INTERCEPTOR,
+    WE_CHAT_APP_ID,
+    WE_CHAT_APP_SECRET,
+    ACTIVITY
 }
