@@ -9,6 +9,7 @@ import cn.sh.changxing.latte.activities.ProxyActivity;
 import cn.sh.changxing.latte.app.Latte;
 import cn.sh.changxing.latte.delegates.LatteDelegate;
 import cn.sh.changxing.latte.ec.launcher.LauncherDelegate;
+import cn.sh.changxing.latte.ec.main.EcBottomDelegate;
 import cn.sh.changxing.latte.ec.sign.ISignListener;
 import cn.sh.changxing.latte.ec.sign.SignInDelegate;
 import cn.sh.changxing.latte.ui.launcher.ILauncherListener;
@@ -48,7 +49,7 @@ public class ExampleActivity extends ProxyActivity implements
         switch (tag) {
             case SIGNED:
                 Toast.makeText(this, "启动结束，用户登录了", Toast.LENGTH_LONG).show();
-                startWithPop(new ExampleDelegate());
+                startWithPop(new EcBottomDelegate());
                 break;
             case NOT_SIGNED:
                 Toast.makeText(this, "启动结束，用户没登录", Toast.LENGTH_LONG).show();
