@@ -21,8 +21,8 @@ public class ExampleApp extends Application {
         Latte.init(this)
                 .withIcon(new FontAwesomeModule()) // 引用现成的(FontAwesome)ICON
                 .withIcon(new FontECModule()) // 自定义字体,来源阿里巴巴矢量图标库,本地存放在assets目录下的tff文件
-                .withApiHost("http://127.0.0.1/")
-                .withInterceptor(new DebugInterceptor("index",R.raw.test))
+                .withApiHost("http://192.168.30.47:8080/RestDataServer/api/")
+                .withInterceptor(new DebugInterceptor(/*"index"*/"haha",R.raw.test))
                 .withWeChatAppId("")
                 .withWeChatAppSecret("")
                 .configure();
