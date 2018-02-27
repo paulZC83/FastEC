@@ -2,7 +2,6 @@ package cn.sh.changxing.latte.ui.refresh;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.widget.Toast;
 
 import cn.sh.changxing.latte.app.Latte;
 import cn.sh.changxing.latte.net.RestClient;
@@ -39,7 +38,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-                        Toast.makeText(Latte.getApplicationContext(), response, Toast.LENGTH_LONG).show();
+
                         Log.d("--------zzzzcc------", "success:"+response);
                     }
                 })
