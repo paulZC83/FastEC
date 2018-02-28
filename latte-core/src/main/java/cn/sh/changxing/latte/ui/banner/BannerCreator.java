@@ -15,13 +15,13 @@ import cn.sh.changxing.latte.R;
 public class BannerCreator {
 
     public static void setDefault(ConvenientBanner<String> convenientBanner, ArrayList<String> banner,
-                                  OnItemClickListener clickListener){
+                                  OnItemClickListener clickListener) {
         convenientBanner.setPages(new HolderCreator(), banner)
                 .setPageIndicator(new int[]{R.drawable.dot_normal, R.drawable.dot_focus})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
-        .setOnItemClickListener(clickListener)
-        .setPageTransformer(new DefaultTransformer())
-        .startTurning(3000)
-        .setCanLoop(true);
+                .setOnItemClickListener(clickListener)
+                .setPageTransformer(new DefaultTransformer())
+                .startTurning(3000)
+                .setCanLoop(true);
     }
 }

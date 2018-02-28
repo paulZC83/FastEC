@@ -4,23 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.joanzapata.iconify.widget.IconTextView;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import cn.sh.changxing.latte.delegates.bottom.BottomItemDelegate;
 import cn.sh.changxing.latte.ec.R;
 import cn.sh.changxing.latte.ec.R2;
-import cn.sh.changxing.latte.net.RestClient;
-import cn.sh.changxing.latte.net.callback.ISuccess;
-import cn.sh.changxing.latte.ui.recycler.MultipleFields;
-import cn.sh.changxing.latte.ui.recycler.MultipleItemEntity;
 import cn.sh.changxing.latte.ui.refresh.RefreshHandler;
 
 /**
@@ -53,10 +47,16 @@ public class IndexDelegate extends BottomItemDelegate {
         mRefreshLayout.setProgressViewOffset(true, 120, 300);
     }
 
+    private void initRecyclerView(){
+        final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
+        mRecyclerView.setLayoutManager(manager);
+    }
+
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initRereshLayout();
+        initRecyclerView();
         mHandler.firstPage("http://192.168.30.47:8080/RestDataServer/api/index_data.php");
     }
 
@@ -67,20 +67,7 @@ public class IndexDelegate extends BottomItemDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        mHandler = new RefreshHandler(mRefreshLayout);
-        RestClient.builder().url("http://192.168.30.47:8080/RestDataServer/api/index_data.php")
-                .success(new ISuccess() {
-                    @Override
-                    public void onSuccess(String response) {
-                        final IndexDataConverter converter = new IndexDataConverter();
-                        converter.setJsonData(response);
-                        final ArrayList<MultipleItemEntity> list = converter.convert();
-                        final String image = list.get(1).getField(MultipleFields.IMAGE_URL);
-                        final String text = list.get(1).getField(MultipleFields.TEXT);
-                        Toast.makeText(getContext(), text+":::"+image , Toast.LENGTH_LONG).show();
-                    }
-                })
-                .build()
-                .get();
+        mHandler = RefreshHandler.create(mRefreshLayout, mRecyclerView, new IndexDataConverter());
+
     }
 }
