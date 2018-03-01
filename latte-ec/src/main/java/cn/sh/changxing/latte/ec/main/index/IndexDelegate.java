@@ -16,6 +16,7 @@ import butterknife.BindView;
 import cn.sh.changxing.latte.delegates.bottom.BottomItemDelegate;
 import cn.sh.changxing.latte.ec.R;
 import cn.sh.changxing.latte.ec.R2;
+import cn.sh.changxing.latte.ec.main.EcBottomDelegate;
 import cn.sh.changxing.latte.ui.recycler.BaseDecoration;
 import cn.sh.changxing.latte.ui.refresh.RefreshHandler;
 
@@ -40,7 +41,7 @@ public class IndexDelegate extends BottomItemDelegate {
 
     private RefreshHandler mHandler = null;
 
-    private void initRereshLayout(){
+    private void initRereshLayout() {
         mRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
                 android.R.color.holo_orange_light,
@@ -49,10 +50,13 @@ public class IndexDelegate extends BottomItemDelegate {
         mRefreshLayout.setProgressViewOffset(true, 120, 300);
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.addItemDecoration(BaseDecoration.create(ContextCompat.getColor(getContext(), R.color.app_background),5));
+        mRecyclerView.addItemDecoration(BaseDecoration.create(ContextCompat.getColor(getContext(), R.color.app_background), 5));
+        //item点击事件
+        final EcBottomDelegate ecBottomDelegate = getParentDelegate();
+        mRecyclerView.addOnItemTouchListener(IndexItemClickListener.create(ecBottomDelegate));
     }
 
     @Override
